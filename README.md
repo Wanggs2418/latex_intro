@@ -12,9 +12,9 @@
 
 settings.json 路径为：C:\Users\Administrator\AppData\Roaming\Code\User
 
-vs用ctrl+p后进行搜索settings即可。
+vs用`Ctrl+p`后进行搜索settings即可。
 
-注意现在发行的包大多以pdfTeX为默认的引擎
+注意现在发行的包大多以`pdfTeX`为默认的引擎，此此处设置`xelatex`为首位。
 
 ```json
 
