@@ -1,0 +1,1765 @@
+\documentclass[16pt]{article}
+% \documentclass[twocolumn]{article}
+\usepackage{ctex}
+% \usepackage{cite}
+\usepackage{geometry}  %页面布局
+\usepackage{listings} %代码环境
+\usepackage{color}
+\usepackage[dvipsnames,svgnames,x11names]{xcolor} %整合12种色彩模式
+\usepackage{setspace} %行距
+\usepackage{marginnote} %边注
+\usepackage{verbatim} %代码环境
+\usepackage{paralist} %列表的行间距
+\usepackage{amsmath} %公式，ams版本的equation环境可以嵌入次环境
+\usepackage{amsthm} %定理，提供proof环境来输出证明
+\usepackage{amsfonts} %\mathfrak和\mathbb需要
+\usepackage{mathrsfs} %\mathscr{text}需要
+\usepackage{graphicx} %插入图片的宏包
+\usepackage{subfig} %图片共享有一个子标题
+\usepackage{pstricks} %可以直接在文档中插入绘图命令
+\usepackage{pspicture}
+\usepackage{booktabs} %三线表横线的的粗细
+\usepackage{tikz} %前端TikZ调用，底层PGF系统驱动
+\usepackage{pst-pdf} %生成包含PSTricks图形的EPS,根据需要转为
+\usepackage{multirow} %横跨几行的宏包
+\usepackage{warpcol} %调整小数点和数位对齐工作
+\usepackage{longtable} %表格太长，用longtable取代tabular
+\usepackage{tabularx} %控制整个表格的宽度
+\usepackage{rotating} %设置宽表格时使用，用sidewaystable环境替代table
+% \usepackage[table]{xcolor}
+\usepackage{colortbl} %表格颜色
+\usepackage{xltxtra} %XeLaTex标志符号显示使用
+\usepackage{texnames} %BibTeX标志使用
+\usepackage{mflogo} %METAFONT宏包使用
+\usepackage{natbib} %文献
+\usepackage{hyperref} %超链接功能
+% \usepackage[active,tightpage,xetex]{preview} %如果使用xdvipdfmx,直接生成pdf，文件体积小
+%设置纸张布局和页边距
+%quad是空格
+\geometry{a4paper,left=3.18cm,right=3.18cm,top=2.4cm,bottom=2.4cm}
+\graphicspath{{E:/Latex/image}} %事先指定图片的路径
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black
+    }
+%消除默认生成目录的红框
+% \setlength{\parindent}{2em}
+%设置段落间的距离
+% \addtolength{\parskip}{3pt}
+
+% 设置插入代码的样式
+% \lsset和\lstdefinestyle{language-name}性质一样，不过后者的优先级更高
+
+\lstset{
+    backgroundcolor = \color{lightgray!30},
+    basicstyle      =   \sffamily,      %基本代码风格
+    keywordstyle    =   \bfseries,      %关键字风格
+    commentstyle    =   \rmfamily\itshape, %注释风格，斜体
+    stringstyle     =   \ttfamily,      %字符串风格
+    flexiblecolumns,
+    numbers         =   left,           %行号的位置在左边
+    showspaces      =   false,          %是否显示空格
+    numberstyle     =   \zihao{-5}\ttfamily,    %行号的样式，小五号
+    %showstringspace =   false,
+    captionpos      =   t,              %代码名字所呈现的位置，t指的是top上面
+    frame           =   lrtb,           %显示边框
+}
+
+% \lstset{
+%   backgroundcolor = \color{lightgray!30},
+%   keywordstyle    = \color{blue},
+%   stringstyle     = \color{brown},
+%   basicstyle      = {\small\ttfamily},
+%   breaklines      = true,
+%   tabsize         = 4,
+%   gobble          = 2,
+%   numbers         = left,
+%   numberstyle     = \tiny\emptyaccsupp,
+%   frame           = single,
+%   xleftmargin     = \ccwd,
+%   numbersep       = \ccwd,
+%   columns         = fullflexible,
+% %  emphstyle       = {\color{blue}\small\ttfamily},
+% %  emph            = {mkdir,rmdir,sudo,mount,umount,rm},
+% }
+
+\lstdefinestyle{Python}{
+    language        =   Python, % 语言选Python
+    basicstyle      =   \zihao{-5}\ttfamily,
+    numberstyle     =   \zihao{-5}\ttfamily,
+    keywordstyle    =   \color{blue},
+    keywordstyle    =   [2] \color{teal},
+    stringstyle     =   \color{magenta},
+    commentstyle    =   \color{red}\ttfamily,
+    breaklines      =   true,   % 自动换行，建议不要写太长的行
+    columns         =   fixed,  % 如果不加这一句，字间距就不固定，很丑，必须加
+    basewidth       =   0.5em,
+}
+
+\lstdefinestyle{LaTeX}{
+    language        =   LaTeX, % 语言选LaTeX
+    basicstyle      =   \zihao{-5}\ttfamily,
+    % numberstyle     =   \zihao{-5}\ttfamily,
+    keywordstyle    =   \color{blue},
+    keywordstyle    =   [2] \color{teal},
+    stringstyle     =   \color{magenta},
+    commentstyle    =   \color{red}\ttfamily,
+    breaklines      =   true,   % 自动换行，建议不要写太长的行
+    columns         =   fixed,  % 如果不加这一句，字间距就不固定，很丑，必须加
+    basewidth       =   0.5em,
+}
+
+
+\title{LaTeX文档}
+\author{Rouliy }
+\date{January 2022}
+
+
+\begin{document}
+
+\maketitle
+
+%设置目录
+\tableofcontents
+%设置层次深度
+% \setcounter{tocdepth}{2}
+
+\section{入门}
+\subsection{关于vs编辑器的一些事}
+注意在VS编辑器下编辑时，调出控制台ctrl+shift+Y
+\par
+全屏模式：ctrl+K 接着按Z; 而后按两次esc可退出
+\par
+alt+z 自动换行
+
+\LaTeX 空格和\LaTeX{} 空格生成
+\subsection{基本语法介绍}
+注意用xelatex程序编译源文件生成PDF文件。借助LaTeX工具
+\par
+\LaTeX{}源文件的语句分为三种：命令(command),数据和注释(comment)。命令以\textbackslash 起始，多为一行；而环境包含一对起始声明和结尾声明，用于多行内容的场合。注释为百分号\%,在编译时忽略。
+
+\subsection{物理与逻辑结构}
+\LaTeX{}文档的结构分为物理结构和逻辑结构。其中物理结构：源文件的组织形式，包括序言(preamble)和正文两部分。(现发行的包缺省时引擎一般为pdfTeX)。逻辑结构：最终输出文档的结构，包含标题，目录，章节等。
+\par
+\begin{lstlisting}
+    \documentclass[option]{class} %文档类声明
+    \usepackage[option]{package} %引入宏包
+\end{lstlisting}
+
+序言：完成一些设置，定义文件呢类型documentclass，引入宏包usepackage，定义命令，环境等；实际内容放在正文部分。\LaTeX{}中常见的文档类型(documentclass):article、report、book，其基本选项如下见表所示。
+注：表格在线生成工具网址 https://www.tablesgenerator.com/。
+\par
+逻辑结构：文档的开头通常有标题，作者，摘要等信息。之后为章节等层次结构，内容分散于层次结构间。具体用法如下：
+\par
+\begin{lstlisting}
+        \title{LaTeX Notes}
+        \date{\today}
+        \maketitle  %注意\maketitle命令放在最后
+        \begin{abstract}
+        \end{abstract}%摘要，article和report可以有，book里没
+    \end{lstlisting}
+\par
+\LaTeX{}提供7种层次结构，高级层次可以包含若干低级层次,article中没有chapter，而report和book中支持所有层次
+\begin{lstlisting}
+        \part{..}           %level -1
+        \chapter{..}        %0
+        \section{..}        %1
+        \subsection{..}     %2
+        \subsubsection{}    %3
+        \paragraph{}        %4
+        \subparagraph{}     %5
+
+        \setcounter{tocdepth}{2}    %设置目录深度
+        \tableofcontents            %列出目录
+
+        \chapter*{}          %不想让某些层次的标题出现在目录中，可以加上星号
+    \end{lstlisting}
+
+
+\begin{table}
+    \begin{tabular}{ccc}
+        \hline
+        10pt,11pt,12pt        & 正文字号,第一个为缺省                                               \\
+        letterpaper,a4paper   & 纸张尺寸，如[a4paper]                                               \\
+        notitlepage,titlepage & 标题后另起新页                                                      \\
+        onecolumn,twocolumn   & 栏数                                                                \\
+        draft                 & 草稿模式，某些行排得过满，draft模式可以在他们右边标上粗黑线提醒用户 \\
+        \hline
+    \end{tabular}
+\end{table}
+\subsection{文字}
+
+\subsubsection{字符输入}
+普通字符，控制符，特殊符号，预定义字符串，注音符号等。
+\par
+特殊的控制符需在字符前加"\textbackslash"表示为：\#,  \$,  \^,  \-,  \_,  \textbackslash。LATEX 中有短划线 (hypen) 、中划线 (en-dash) 和长划线 (em-dash) 。短划线又称连字符，用来连接单词；中划线用来连接数字，可以通过重复两次短划线得到；长划线类似于中文的破折号，重复三次短划线。为了便于比较，这里也给出数学模式的减号。
+\begin{lstlisting}
+        computer-aided
+        1840--2010
+        to be---or not to be
+        $1-1=0$ 
+    \end{lstlisting}
+实现的结果：
+computer-aided
+1840--2010
+to be---or not to be
+$1-1=0$
+
+
+\subsubsection{字体样式}
+拉丁的文字体：衬线字体(roman,serif),无衬线字体(sansserif),"sans"来源于法语，表示"没有"。还有等宽字体(monospace,typewriter),衬线字体有修饰[类似于中文的宋体，楷体，仿宋等]，无衬线字体则类似于黑体。\emph{强调的文字}，\underline{画下划线的文字}。
+\par
+
+\textrm{roman字体,衬线字体有修饰} \par
+\textsf{sans serif，无衬线字体，类似黑体} \par
+\textsc{smallcaps,小型大写字母，大写字母的形状同，但尺寸接近小写字母} \par
+\textbf{粗体}   \par
+\textmd{半粗体} \par
+\textit{斜体，修饰精细，对原字体进行了重新设计,版本问题} \par
+\textsl{伪斜体，比斜体要宽，版本问题}   \par
+\texttt{等宽字体}
+% \uwave{字体波浪线} \par
+% \sout{strike-out} \par
+
+
+\subsubsection{换行，换页和断字}
+通常用\LaTeX{}来自动换行，用 \textbackslash \textbackslash 或 \textbackslash newline来强制换行，\textbackslash newpage来强制换页。 \par
+\LaTeX{}会自动断字(hyphenate),使得每个字分布均匀，有时也需要显示指明断字位置。
+
+\subsubsection{长度}
+精确排版时，人们需要控制排版对象的尺寸和位置。其中point是传统印刷采用的单位，而big point是Adobe推出的PostScript时的新单位，注意em为相对单位，比如当前字体为11pt时，lem就是11pt；同时ex和mu也是相对单位。 \par
+对文章排版对象的尺寸和位置定义了一系列宏变量，以便在排版重用
+\begin{lstlisting}
+        \setlength{变量名} %设置变量的值
+        \addtolength{变量名} %增加变量、
+        \newlength{变量名} %定义变量
+    \end{lstlisting}
+
+\subsection{对齐和间距}
+\subsubsection{段落和对齐}
+\LaTeX{}中段落为两端对齐(fully justified)，段落分别居右，中，左( \textbackslash raggedright， \textbackslash centering, \textbackslash raggedleft)功能相同。
+\begin{lstlisting}
+        \begin{flushleft}
+            居左\\常用的对齐方式
+            \begin{center}
+                居中
+                \begin{flushright}
+                    居右
+                \end{flushright}
+            \end{center}
+        \end{flushleft}
+    \end{lstlisting}
+
+\subsubsection{缩进和段间距}
+正文的第一段落缺省不缩进首行，可以用宏包identfirst，其中段落首行缩进的距离可以用 \textbackslash parindent变量控制。
+
+\subsubsection{行间距}
+段落中相邻基线间的距离，缺省为单倍行距， \textbackslash linespread{1.3} 为一倍半行距，{1.6}为双倍行距。此命令改变正文的行距，目录，脚注，图表标题等。\par
+局部文字的行间距用setpace宏包来实现
+\begin{lstlisting}
+        \usepackage{setspace}
+        \singlespacing %单倍行距
+        \onehalfspacing %一倍半行距
+        \doublespacing %双倍行距
+        \setstretch{1.25} %设置任意行距
+        \begin{doublespacing}
+            双倍行距
+        \end{doublespacing}
+    \end{lstlisting}
+
+
+\subsection{特殊段落}
+
+\subsubsection{摘录}
+三种摘录环境：quote,quotation,verse。quote两端都缩进。quotation在quote的基础上增加了首行缩进，verse比quote多了第二行起的缩进。
+\begin{quote}
+    quote，引文两端缩进
+\end{quote}
+\begin{quotation}
+    在quote的基础上，quotation增加了首行缩进
+\end{quotation}
+\begin{verse}
+    verse,引文两端缩进 \par
+    不过是第二行增加了缩进
+\end{verse}
+
+\subsubsection{原文打印:源代码和命令}
+\textbf{文档中的命令和源代码通常使用等宽字体，即原文打印}。正文中插入少量的可以使用 \textbackslash verb命令；大段的文字可以使用verbatim环境比较方便。以及fancyvrb和listings宏包
+\begin{verbatim}
+    verbatim不带星号的版本
+    printf("LaTeX");
+\end{verbatim}
+\begin{verbatim*}
+    verbatim不带星号的版本，能够显示空格
+    printf(" LaTeX*");
+\end{verbatim*}
+
+\subsubsection{脚注}
+可以使用 \textbackslash footnote \footnote{这是个脚注}，对脚注重新定义，脚注是个计数器（counter），有5中显示格式：
+\begin{lstlisting}
+        阿拉伯数字 \arabic{counter} 1,2,3
+        小写英文字母 \alph{counter} a,b,c
+        大写英文字母 \Alph{counter} A,B,C
+        小写罗马数字 \roman{counter} i,ii,iii
+        大写罗马数字 \Roman{counter} I,II,III
+    \end{lstlisting}
+\par
+重定义\textbackslash thecounter的方法改变显示的格式
+\begin{lstlisting}
+        \renewcommand{\thefootnote}{\roman{footnote}} 
+        %注意此命令只改变之后的脚注序号
+        %以后出现的计数器，都可以用\thecounter的方法重新定义
+    \end{lstlisting}
+
+\subsubsection{边注}
+使用\textbackslash marginpar命令。单面排版时，边注缺省排在页面右边空白处；此命令使用了浮动体来生成边注，\texttt{不能在其他浮动体或脚注内嵌套}。而marginnote宏包不涉及浮动。
+\marginnote{边注的内容，使用了marginnote宏包，没有用浮动体} %边注内容表示，位置在上面内容的结束处开始。
+
+\subsubsection{注释}
+对于大段文字的注释，使用verbatim包的comment环境
+\begin{comment}
+大段的注释
+\end{comment}
+
+
+\subsection{列表}
+\subsubsection{基本列表}
+\LaTeX{}三种基本列表环境：无序，有序，描述列表。
+\begin{itemize}
+    \item 无序列表
+    \item 实例
+\end{itemize}
+\begin{enumerate}
+    \item 有序列表
+    \item 演示列表
+\end{enumerate}
+\begin{description}
+    \item[列表] 列表可单独使用，可相互嵌套
+    \item[C++] 编程语言
+    \item[Java] 编程语言
+    \item[HTML] 编程语言
+\end{description} \par
+其他列表：上述列表的行间距较大，为节省空间可以用paralist宏包，它提供了一系列压缩列表和行间列表环境。\\
+\textbf{压缩列表：+compact}
+\begin{compactitem}
+    \item 无序的压缩列表
+    \item 实例
+    \item HTML
+\end{compactitem}
+\begin{compactenum}
+    \item 有序的压缩列表
+    \item HTMLo
+\end{compactenum}
+\textbf{行间列表:+前缀inpara-}
+
+\begin{inparaitem}
+    \item 行间列表
+    \item 显示在一行中
+\end{inparaitem}
+\par
+\begin{inparaenum}
+    \item 行间有序
+    \item 列表
+\end{inparaenum}
+
+\subsubsection{定制列表}
+改变列表的符号和编号
+%\renewcommand{\labelitemi}{-}
+%\renewcommand{\theenumi}{\alph{enumi}}
+\begin{lstlisting}
+        \renewcommand{command}{def}
+    \end{lstlisting}
+改变符号后的表格
+\begin{itemize}
+    \item 无序列表
+    \item HTML
+\end{itemize}
+\begin{enumerate}
+    \item 有序列表
+    \item HTML
+\end{enumerate}
+
+\subsection{盒子}
+\subsubsection{初级盒子}
+相似与HTML和CSS中的模型。最简单的盒子命令为：\textbackslash mbox和\textbackslash fbox。前者把对象组合，后者则价格外框。
+\mbox{010 6278 5001}
+\fbox{010 6278 5001}
+\subsubsection{中级盒子}
+稍微复杂的盒子为，\textbackslash makebox和\textbackslash framebox命令提供宽度和对齐方式选项。居中（默认），居左，右，两端对齐[c,l,r,s]。\par
+\makebox[100pt][c]{宽度，对齐方式，内容} \par
+\framebox[200pt][s]{两端对齐}
+\subsubsection{高级盒子}
+大一些的对象，比如整个段落可用\textbackslash parbox命令或minpage环境，两者类似。 \par
+语法格式：[外部对齐](t,c,b居顶，中，底对齐)[高度][内部对齐]{宽度}{内容} \par
+\fbox{
+    \begin{minipage}[c][36pt][t]{300pt}
+        高级盒子试验模型，与周围对象的纵向关系为外部对齐。
+    \end{minipage}
+}
+\par
+\fbox{
+    \parbox[l][36pt][t]{170pt}{
+        盒子的内容，fbox带边框
+    }
+}
+\begin{lstlisting}
+                \fbox{
+            \parbox[c][36pt][t]{170pt}{
+                盒子的内容
+            }
+        }
+    \end{lstlisting}
+
+\subsubsection{交叉引用}
+(cross reference)，对前面的最近一个对象的编号或页码引用。
+\begin{lstlisting}
+        一个标签 \label{marker}
+        第\pageref{marker}页\ref{marker}节
+        其中，marker为标签名
+    \end{lstlisting}
+标签 \label{bq}
+第\pageref{bq}页\ref{bq}节,
+注意标签第一次编译后会提示警告信息，第二次才有正确的结果。
+
+
+\section{字体}
+字体的概念可以划分为三个层次：\par
+\begin{compactenum}
+    \item 编码层，字符（包括字母，数字，控制码等）的索引和编码，即字符集（character）和字符编码（character encoding）
+    \item 格式层，字型（glyph）的定义描述方法，字体的文件储存格式
+    \item 显示层，字体的外在表现形式，如字体的样式或具体的字体
+\end{compactenum}
+\subsection{字符集和编码的故事}
+微软将IBM的代码页称为OEM代码页，自己定义的称为ANSI代码页，比如936（GBK 简体中文），950（Big5 繁体中文）。1981年，中国大陆推出第一个自己的字符集标准GB2312，94×94的表，包括7445个字符。GB2312通常采用双字节EUC-CN编码，所以后者又称为GB2312编码。GB2312在1993年被拓展为GBK，包含21886个字符。GBK不是正式的标准，2000年发布的GB18030包含70244个字符，采用四字节的编码。\par
+1990年ISO推出了通用字符集（universal character set,UCS），即ISO10646。UCS有两种编码：双字节的UCS-2和四字节的UCS-4。除了ISO外，统一码联盟（The Unicode Consortium），它于1991年推出了Unicode 1.0，其后双方合并，Unicode 2.0版开始采用与ISO 10646-1相同的编码。 \par
+Unicode主要有三种编码：UTF-8，UTF-16，UTF-32。UTF-8使用1-4个8位编码，UTF-16使用1-2个16位编码，和ASCII不兼容。UTF-32用1个32位编码。IETF要求所有的网络协议都支持UTF-8，IMC也建议所有的电子邮件软件都支持UTF-8。
+\subsection{字体格式}
+\subsubsection{点阵和矢量字体}
+电脑字体的数据格式可分为3大类：点阵（bitmap）字体，轮廓（outline）字体[矢量字体]和笔画（stroke-based）字体。 \par
+点阵字体通过点阵描述字体；矢量字体通过一组直线段和曲线描述字形，轮廓字体的缺陷在于其所采用的贝塞尔曲线在光栅设备（如显示器和打印机）不能渲染，故需要额外的补偿处理；笔画字体其实也是轮廓字体，不过其描述的不是完整字形，而是笔画，多用于东亚文字。
+\subsubsection{常见的字体格式}
+轮廓字体格式：Type1，TrueType，OpenType。Type1采用三次的贝塞尔曲线，TrueType采用二次贝塞尔曲线，处理比三次曲线快，但需要更多的点描述。OpenType被认为是Type1和TrueType的超集，既可以使用二次曲线也可以使用三次曲线。
+\subsubsection{常见字体}
+TEX的缺省字体是Knuth用METAFONT生成的Computer Modern;XETEX的缺省字体是1997年AMS发布的Latin Modern，基于Computer Modern，但是扩展了字符集，其封装格式有Type1和OpenType。
+
+\subsection{字体的应用}
+LaTeX,pdflatex,xelatex编译程序，dvips和dvipdfmx驱动，DVI浏览器等分别采用不同的字体技术路线。
+\subsubsection{早期技术}
+\textbf{latex和DVI} \par
+用latex生成DVI时只需要TFM文件，DVI并不包含字形信息，而只包含对字体的引用。DVI浏览器显示DVI时一般使用PK，找不到则调用METAFONT在后台生成。
+\par
+\textbf{dvips} \par
+缺省时，dvips也会查找.pk，没有则自动生成。
+
+\subsubsection{XeTeX}
+XETEX用一个XML文件记录系统字体路径，MikTeX用的是localfonts.conf，TeXlive用的是fonts.conf。设置字体时需要字体的引用名，和字体的文件名是不同的概念。\par
+XETEX提供的字体命令比较原始，繁琐，而fontspec宏包提供了较好的封装。
+
+\section{数学模式}
+在序言部分加载amsmath宏包，提供数学的排版功能。数学模式有两种形式：行间（inline）模式（在正文中插入数学内容）和独立（display）模式（独立排列，可以有编号或没有编号）。 \par
+    \begin{lstlisting}
+        行间公式用$...$
+        无编号的独立公式用\[...\]
+        建议不用$$...$$，会和AMS-Latex有冲突
+    \end{lstlisting}
+
+    \[ \boxed{E=mc^2} \]
+    \begin{equation}
+        E=mc^2
+    \end{equation}
+    \begin{math}
+        \textrm{段内的文本你，此处为math:}\sum\limits_{i=1}^n
+    \end{math}
+    \begin{displaymath}
+        \textrm{公式中的文字用textrm命令，段外的文本，此处为displaymath:}\sum\limits_{i=1}^n
+    \end{displaymath}
+
+\subsection{基本元素}
+\subsubsection{希腊字母}
+希腊字母需要用命令输入，大写的希腊字母的命令首字母也是大写。
+$\alpha \Gamma \Delta $
+\[\epsilon \zeta\ \Theta\]
+
+\subsubsection{上下标和根号}
+    \begin{equation}
+        \theta = \sigma + \rho
+    \end{equation}
+    \[x_{ij}^2\quad \sqrt{x}\quad \sqrt[3]{x} \]
+\subsubsection{分数}
+    用\textbackslash frac命令表示，可根据环境自动调整字号，如行间公式中中小一点，独立公式中大一点。也可以设置分数字号，如\textbackslash dfrac把分数的字号设置为独立公式中的大小，\textbackslash tfrac则将其设置为行间公式的大小。\par
+    $\frac{1}{2}  \dfrac{1}{2}$
+    \[\frac{1}{2}
+    \tfrac{1}{2}\]
+\subsubsection{运算符}
+小运算符可直接输入如+ - * / = 等可以直接输入。
+\[\pm\ \times\ \div\ \cdot\ \cap\ \cup\ \geq\ \leq\ \neq\ \approx\ \equiv \]
+\par
+和，积，极限，积分等大运算符用\textbackslash sum，\textbackslash prod，\textbackslash lim，\textbackslash int等命令。
+
+\begin{lstlisting}
+    quad是空格
+    $\sum_{i=1}^n i
+    \prod_{i=1}^n
+    \lim_{x\to0}x^2
+    \int_a^b x^2 dx $
+    $\sum\limits_{i=1}^n i
+    \prod\limits_{i=1}^n j
+    \[\sum\nolimts_{i=1}^n i
+    \prod\nolimts_{i=1}^n \]$
+\end{lstlisting}
+说明：quad是空格 \par
+$\sum_{i=1}^n i \quad
+\prod_{i=1}^n   \quad
+\lim\limits_{x\to0}x^2 \quad
+\int_a^b x^2 dx $   
+$\sum\limits_{i=1}^n i  \quad
+\prod\limits_{i=1}^n j$
+\[\sum\limits_{i=1}^n i \quad \prod\limits_{i=1}^n \quad \lim\limits_{x\to0^-}x^2 \quad \int_a^b x^2 dx\]
+\par
+多重积分表示：
+    \begin{lstlisting}
+        \iint 二重积分
+        \iiint 三重积分
+    \end{lstlisting}
+    \[\int_{-\infty}^{+\infty}x^3dx\]
+    \[\lim_{\lambda \to 0}\sum\limits_{i=1}^n f(\xi _i,\eta _i)\Delta \sigma _i=\iint\limits_{D_{xy}} f(x,y)d\sigma \]
+    \[\iiint\limits_{\Omega }x^3 dxdydz\]
+\textbf{箭头:}
+    $ \rightarrow \Longrightarrow $\textbackslash xleftarrow和\textbackslash xrightarrow。可扩展的箭头：\par
+    \[\xleftarrow[x<y]{x+y+z}\]
+
+\subsubsection{注音和标注}
+数学注音符号（accent），列出一些长的标注符号。\par
+\[\bar{x} \quad \vec{x} \quad \hat{x} \quad \check{x} \quad \mathring{x} \quad \tilde{x} \quad \acute{x} \quad \grave{x} \quad \breve{x}\] \par
+速度，加速度：\par
+\[\dot{x} \quad \ddot{x} \quad \dddot{x}\]
+\subsubsection{分隔符}
+    各种括号(),[],\{\},尖括号$\langle \rangle$。 \par
+    $\overline{xxx} \quad \overleftarrow{xxx} \quad \underline{xxx} \quad \overleftrightarrow{xxx} \quad \overbrace{xxx} \quad \widehat{xxx} \quad \widetilde{xxx}$
+    $\textrm{amsmath宏包推荐公式中用：}\lvert \quad \rvert \quad \lVert \quad \rVert$代替\LaTeX{}中的|。 \par
+    同时可以在分隔符前面加\textbackslash big \textbackslash Big \textbackslash bigg \textbackslash Bigg等调整其大小。\par
+    \big(,\bigg(,\Big(,\Bigg(。
+
+\subsubsection{省略号}
+    省略号用\textbackslash dots \textbackslash cdots \textbackslash vdots \textbackslash ddots等命令表示。
+    \begin{lstlisting}
+        \dots 下标省略号
+        \cdots 中部的省略号
+        \vdots 竖向的省略号
+        \ddots 斜向的省略号 
+    \end{lstlisting}
+    \[x_1,x_2,\dots,x_n\quad 1,2,\cdots,n \quad \vdots \quad \ddots\]
+\subsubsection{空白间距}
+    \textbackslash ,\quad $3/18em; \quad |\,| \quad$ \par
+    \textbackslash :\quad $4/18em; \quad |\:| \quad$ \par
+    \textbackslash ;\quad $5/18em; \quad |\;| \quad$ \par
+    \textbackslash quad\quad $1em; \quad |\quad| \quad$ \par
+    \textbackslash qquad\quad $2em; \quad |\qquad| \quad$ \par
+    \textbackslash !\quad $-3/18em; \quad |\!| \quad$
+\subsubsection{矩阵}
+    数学模式下可用array环境生成矩阵。外部对齐方式(t,c,b)，列对齐方式(l,c,r)。\textbackslash \textbackslash 用来分隔行和\& 用来分隔列。
+    \begin{lstlisting}
+        \begin{array}[外部对齐]{列对齐}
+            行列内容
+        \end{array}
+    \end{lstlisting}
+    \[
+        \begin{array}{ccc}
+            x_1     &       x_2     &   \dots \\
+            x_3     &       x_4     &   \dots \\
+            \vdots  &       \vdots  &   \ddots 
+        \end{array}
+        \]
+    \par
+    amsmath的pmatrix,Bmatrix,vmatrix,Vmatrix等环境可以在矩阵两边家伙加上各种分隔符，但它们没有对齐参数。 \par
+    \textbackslash smallmatrix命令可以生成行间矩阵。
+    A little martix 
+    $(
+        \begin{smallmatrix}
+            a   &   b   \\
+            c   &   d
+        \end{smallmatrix}
+    )$
+
+\subsection{多行公式}
+    对应公式太长导致一行放不下，用amsmath提供一些多行公式。
+\subsubsection{长公式}
+    无需对齐的长公式使用multline环境。需要对齐的长公式使用split环境，但其本身不能单独使用，必须包含在其他的数学环境中，因此也称为次环境，用\textbackslash \textbackslash 和 \& 来分行和设置对齐的位置。
+    \begin{multline}
+        x = a+b+c+{} \\
+        d+e+f+g
+    \end{multline}
+    \[
+        \begin{split}
+            x = {} & a+b+c+{} \\
+                   & d+e+f+g
+        \end{split}
+        \]
+    \subsubsection{公式组}
+    不需对齐的公式组：gather环境。需对齐的公式组用align环境。
+    \begin{gather}
+        a = b+c+d \\
+        x = y+z
+    \end{gather}
+    \begin{align}
+        a  &= b+c+d \\
+        x  &= y+z
+    \end{align} 
+    multline,gather,align等环境都带有*的版本，不生成公式编号。
+\subsubsection{分支公式-分段函数的宝典}
+    通常用case次环境生成分支公式。 \par
+    \[
+        y=
+        \begin{cases}
+            -x, \quad x\leq 0 \\
+            x, \quad x>0
+        \end{cases}
+    \]
+\subsection{定理和证明}
+    \textbackslash newtheorem命令可用来定义定理之类的环境，其语法如下：\par
+    {环境名}[编号延续]{显示名}[编号层次] \par
+    \textbackslash newtheorem{环境名envname}[caption]{within}
+    以下为定制的四个环境：定义，定理，引理和推论，在一个section内统一编号，引理和推论会延续定理的编号。 \par
+    \begin{lstlisting}
+        \newtheorem{definition}{定义}[section]
+        \newtheorem{theorem}{定理}[section]
+        \newtheorem{lemma}[theorem]{引理}
+        \newtheorem{corollary}[theorem]{推论}     
+    \end{lstlisting} \par
+    \newtheorem{definition}{定义}[section]
+    \newtheorem{theorem}{定理}[section]
+    \newtheorem{lemma}[theorem]{引理}
+    \newtheorem{corollary}[theorem]{推论}
+    
+    \begin{definition}
+        引入复数概念：$i^2=-1$
+    \end{definition}
+    \begin{theorem}
+        两点之间线段最短 
+    \end{theorem}
+    \begin{lemma}
+        从A点到B点走直线最快
+    \end{lemma}
+    \begin{corollary}
+        从某一点到另一点的最短路径
+    \end{corollary}
+    amsthm宏包提供的proof环境可用来输出证明，并且在证明的结尾加上QED符号。演示如下所示： \par
+    \begin{proof}[证明正定矩阵可逆]
+        A*B=C
+    \end{proof}
+
+\subsection{数学字体}
+    和文本模式类似，数学模式下也可选用不同的字体样式。\textbackslash mathbb和\textbackslash mathfrak需要amsfonts宏包，\textbackslash mathscr需要mathrsfs，汉字不会显示出来，仅限于在数学模式下选用。
+    \[
+        ABCXYZ \quad
+        \mathrm{ABCXYZ} \quad
+        \mathsf{ABCXYZ} \quad
+        \mathtt{ABCXYZ} \quad
+        \mathcal{ABCXYZ} \quad
+        \mathbf{ABCXYZ} \quad
+    \]
+    \[
+        \mathit{ABCXYZ} \quad
+        \mathbb{ABCXYZ} \quad
+        \mathfrak{ABCXYZ} \quad
+        \mathscr{ABCXYZ} \quad
+    \]
+
+\section{图形}
+    当年Knuth开发Tex时，GIF,JPEG,PNG,EPS等格式还未问世，但通过\textbackslash special命令，让后面的驱动自行决定怎样处理图形。
+\subsection{图形概述}
+\subsubsection{图形格式}
+\LaTeX{}支持点阵格式JPEG和PNG，也支持矢量格式EPS和PDF;对于示意图，首选矢量格式;包含大量自然色彩的图像（如照片）首选JPEG;人工点阵图像应该选择PNG。\par
+人们考虑把PostScript作为文档中嵌入图形的标准格式，担心嵌入文档的PostSript会搞破坏，就产生了Encapsulated PostScript(EPS)。同样，担心嵌入HTML的ActiveX,Java Applet,JavaScript中混入恶意代码，故会对它们产生限制，因此EPS就成了\LaTeX{}的标准图格式。
+\subsubsection{Driver}
+\textbf{pdflatex} \par
+    pdflatex支持JPEG，PNG和PDF，但不支持EPS。\LaTeX{}有两个宏包 epstopdf和pst-pdf 可以实时地(on the fly) 把EPS转换为PDF。然而前者有安全漏洞，后者用法繁琐，用户最好还是用其他软件事先把EPS转为PDF。pdflatex包含编译和驱动两种功能
+    \par
+\textbf{dvipdfm(x)} \par
+    dvipdfm支持JPEG,PNG和PDF,不支持EPS,但可以实时调用Ghostscript把EPS转为PDF，同时增加了BMP的支持。\par
+    
+\textbf{xdvipdfmx} \par
+    XeLatex的缺省驱动xdvipdfmx支持BMP,JPEG,PNG,EPS和PDF。xdvipdfmx比dvips，pdflatex和dvipdfmx都好。 \par
+\subsubsection{图形优化}
+    矢量图形的一个优点是可以无限缩放的，而输出质量不变，尺寸对矢量图形的意义不大。描述矢量图形所需的数据较少，其文件体积也一般较小。 \par
+\textbf{图形尺寸} \par
+    点阵图像的像素是一种相对尺寸，实际尺寸=像素/分辨率(resolution)，最常用的分辨单位是像素/英寸(pixel per inch,PPI)，点/英寸(dots per inch,DPI)混用。人们倾向于认为PPI是图形的分辨单位，DPI是硬件设备的输出分辨率。\par
+    当图形分辨率和输出分辨率不一致时，会有一个重新采样(resampling)的过程；从高分辨率到低分辨率叫下采样(downsampling),反之叫上采样。高分辨率图形遇到低分辨率设备会形成浪费，低分辨率图形遇到高分辨率设备，看插值的效果。 \par
+    点阵图形的分辨率选择：屏幕上阅读(72 PPI),考虑到放大150 PPI,高质量的打印300PPI足够。考虑在\LaTeX{}文档中插入图形，通栏的话宽度是4.8-5.4in(缺省宽度取决于字体的大小)，仅用于屏幕阅读的话，宽度400px足够；放大阅读或输出打印需要800px或1600px足够。 \par
+    点阵图形尺寸相关的基本操作有：裁剪(crop)，改尺寸(resize)，改分辨率。\par
+    1.裁剪时像素会变少，分辨率不变，缺省输出去尺寸也就变小。\par
+    2.改变尺寸时像素改变，分辨率不变，缺省输出去尺寸改变。\par
+    3.单纯改变图形文件分辨率时，像素不变，缺省尺寸相应改变 \par
+    综上，点阵图形的信息量取决于像素，图形的分辨率为“建议”缺省输出尺寸，不影响图形质量。\par
+    \textbf{色彩深度} \par
+    色彩深度(color depth)是每个像素所用颜色的位数。1位表示2色;2位表示4色，最早用于CGA显卡;16位表示65536色，又称为高彩;24位表示真彩;30-48位表示为深彩，一般照片用24位足够，常用是将图形的色深从高改低。\par
+    \subsubsection{图形转换和处理}
+    命令行界面的图像处理软件ImageMagick，图形界面用Paint.NET。\par
+    \textbf{ImageMagick} \par
+    ImageMagick包含多个命令行程序，最常见的是convert。比如下面的命令把BMP转换为PNG: \par
+    \begin{lstlisting}
+        convert fig.bmp fig.png
+    \end{lstlisting} \par
+    因为Windows中有个区分格式的同名程序，故在Windows下使用ImageMagical则需要全路径，或在PATH环境变量中把ImageMagick的路径放到sysytem32前面。 \par
+    \begin{lstlisting}
+        convert fig.bmp -crop 300×200+10+10 fig.jpg
+        %裁剪并转换格式，截取从(10,10)开始300×200的像素
+        convert fig.jpg -crop 300×200+10+10 -resize 30×20 fig1.jpg
+        %裁剪并缩放
+        convert fig.jpg -resize !300×200 fig1.jpg
+        %强制缩放不考虑长宽比
+        convert fig.jpg -density 300 fig1.jpg
+        %分辨率改为300PPI
+        convert fig.jpg -resample 300 fig1.jpg
+        %分辨率改为300PPI，像素增加，缺省输出尺寸维持不变
+    \end{lstlisting} \par
+    ImageMagick功能强大，参数选项很多，但缩小图像做缩略图时不是很清晰 \par
+    \textbf{转换为EPS} \par
+    ImageMagick 转换 EPS 的方法如下。如果是 BMP 文件，最好先压缩JPEG 或 PNG，再转为 EPS，这样生成的 EPS 会比较小。\par
+    \begin{lstlisting}
+        convert fig.png eps3:fig.eps
+    \end{lstlisting} \par
+    另一种方法是用虚拟打印机生成 EPS，它的优点是可以把几乎所有文件“打印”成 EPS。推荐 Bullzip PDF Printer，它可以把各种文件打印成PS、 EPS、 PDF、 BMP、 JPEG、 PCX、 PNG、 TIFF 等格式。
+
+\subsection{插入图形}
+\subsubsection{范围框}
+    latex编译程序处理图形文件时需要范围框(bounding box)。pdflatex和xelatex出现的较晚。EPS是一种嵌入图形格式，其范围框如下：\par
+    \begin{lstlisting}
+        %!PS-Adobe-3.0 EPSF-3.0
+        %%BoundingBox: 5 5 105 105
+    \end{lstlisting} \par
+    前两个参数是图形左上角的坐标(一般为原点)，后两个参数是右下角的坐标，缺省的长度单位是bp。 \par
+    latex在编译源文件时通过范围框为插图预留空间；它输出的DVI只记录图形尺寸和文件名，具体的图形处理由后面驱动负责，无范围框时，latex则会报错。 \par
+    两种方法为点阵图形提供范围框：1.准备一个单独的范围框文件;2.在插入图形时加范围框参数，用latex推荐用第二种方法。dvipdfm附带的ebb程序可以检查JPEG和PNG，生成范围框文件，bp值 = 像素/分辨率*72。 \par
+\subsubsection{基本命令}
+    面向\LaTeX{}2的graphics和graphicx宏包，后者基于前者，语法更简单，功能更强大。插图命令的基本语法如下：\par
+    \begin{lstlisting}
+        \usepackage[dvipdfm]{graphicx}
+        \includegraphics[bb=0 0 300 200]{fig.png}
+    \end{lstlisting} \par
+    引用宏包时可加驱动选项，使用latex缺省为dvips，dvipdfm(x)用dvipdfm;pdflatex和xelatex分别用pdftex和xetex（可以不加驱动）。使用latex时，没有生成.bb文件，需要或加范围框参数。
+\subsubsection{图形操作}
+    \textbackslash includegraphics命令有一些参数选项用于缩放，裁剪等图形操作：\par
+    1.width=x,height=y; \quad scale=s; \par 
+    2.keepaspectratio \quad  保持图形比例，确保高，宽比例不会失调。 \par
+    3.angle=a \quad 逆时针旋转的角度，单位度 \par
+    4.origin=h[l,c,r]v[t,c,b] \quad 旋转中心，缺省在左下。水平方向可选左，中，右(l,c,r)，垂直方向选上，中，下(t,c,b)。 \par
+    5.totalheight=h \quad 总高度，最高，最低两点间垂直距离。 \par
+    6.viewport=x1,y1,x2,y2 \quad 可视区域左上角和右下角坐标，缺省单位bp。 \par
+    7.trim=l,b,r,t \quad 左，下，右，上四边的裁剪值，缺省单位bp。\par
+    8.clip \quad 是否真正裁剪，配合viewport或trim使用。 \par
+    9.page=n \quad 选页，用于多页图形文件。 \par
+\subsubsection{文件名和路径}
+    \begin{lstlisting}
+        includegraphics[width=60pt]{homer.pdf} 原图
+        includegraphics[width=80pt]{homer.pdf} 放大
+        includegraphics[width=80pt,height=100pt]{homer.pdf} 变形
+        includegraphics[width=80pt,height=100pt,keepaspectratio]{homer.pdf} 
+        保持比例不变形
+    \end{lstlisting}
+    \begin{lstlisting}
+        图形旋转
+        \includegraphics[angle=90]{homer.pdf}
+        \includegraphics[angle=90,origin=c]{homer.pdf}
+    \end{lstlisting}
+    \begin{lstlisting}
+        \DeclareGraphicsExtension{.eps,.mps,.pdf,.png}
+        指定后缀列表让编译程序自行查找
+        \DeclareGraphicsRule{*}{eps}{*}{}
+        指出未知后缀的都是EPS
+        \graphicspath{{c:/file/iamge}} 绝对路径
+        \graphicspath{{./img/}} 相对路径
+        \graphicspath{{}} 多个路径
+        综上，前三个为设置的缺省搜索路径，注意文件名和路径名不能有空格
+        路径名用正斜杠/，路径名用/结尾。
+    \end{lstlisting}
+\subsubsection{figure环境}
+    插图通常需要占据大块的空间，因此在文字处理软件中经常要调整插图的位置。而figure环境则可以自动完成这样的任务，这种自动调整位置的环境称为浮动环境(float)。 \par
+    \begin{lstlisting}
+        h(here)t(top)b(bottom)p(page)
+        这里，页顶，页尾，浮动页
+        四个字母都写上表示放哪里都无所谓
+        \begin{figure}[htbp]
+            \centering
+            \includegraphics{1.jpg}
+            \caption{图像标题}
+            \label{fig:1.jpg}
+            \label一般放在标题之后
+        \end{figure}
+    \end{lstlisting}
+
+\subsubsection{插入多幅图形}
+    \textbf{并排摆放，共享标题} \par
+    当我们需要两幅图形并排时，共享标题，可以在figure环境中使用两个\textbackslash includegraphics命令。 \par
+    \begin{lstlisting}
+        \begin{figure}
+            \centering
+            \includegraphics{left.pdf}
+            \includegraphics{right.pdf}
+            \caption{并排排放，共享标题}
+        \end{figure}
+    \end{lstlisting}
+    \textbf{并排摆放，各有标题} \par
+    各有标题，可以使用minipage环境，caption命令会把环绕它的minipage环境变成figure环境。\par
+    \begin{lstlisting}
+        \begin{figure}[htbp]
+            \centering 使得minipage整体居中
+            \begin{minipage}{60pt}
+                \centering 使内容整体居中
+                    \includegraphics{left.pdf}
+                    \caption{小标题1}
+            \end{minipage}
+            \hspace{10pt}
+            \begin{minipage}{60pt}
+                \centering 使内容整体居中
+                \includegraphics{right.pdf}
+                \caption{小标题2}
+            \end{minipage}
+        \end{figure}
+    \end{lstlisting} \par
+    \begin{figure}[htbp]
+        \centering %使得minipage整体居中
+        \begin{minipage}{200pt}
+            \centering %使内容整体居中
+                \includegraphics{2.jpg}
+                \caption{小标题1}
+        \end{minipage}
+        \hspace{10pt}
+        \begin{minipage}{200pt}
+            \centering %使内容整体居中
+            \includegraphics{3.jpg}
+            \caption{小标题2}
+        \end{minipage}
+    \end{figure}
+
+\textbf{共享标题，各有子标题} \par
+    使用subfig宏包，其提供\textbackslash subfloat命令。
+    \begin{figure}[htbp]
+        \centering
+        \includegraphics{image/1.jpg}
+        \caption{插入的图片}
+    \end{figure}
+
+        \begin{lstlisting}
+        \begin{figure}
+            \centering
+            \subfloat[左边子标题]{
+                \label{fig:a} %避免子标题折行，嵌套minipage
+                \begin{minipage}[t]{60pt}
+                    \centering
+                    \includegraphics{2.jpg}    
+                \end{minipage}
+            }
+        \hspace{10pt}%
+            \subfloat[右边子标题]{
+                \label{fig:b}
+                \begin{minipage}[t]{60pt}
+                    \centering
+                    \includegraphics{3.jpg}    
+                \end{minipage}
+            }
+        \caption{共享的标题}
+        \label{fig：subfig} %标签在引用或交叉引用的时候使用
+        \end{figure}   
+    \end{lstlisting}
+
+    \begin{figure}[htbp]
+        \centering
+        \subfloat[左边子标题]{
+            \label{fig:a}
+            \includegraphics{2.jpg}
+        }
+    \hspace{10pt}%
+        \subfloat[右边子标题]{
+            \label{fig:b}
+            \includegraphics{3.jpg}
+        }
+    \caption{共享的标题}
+    \label{fig：subfig1}
+    \end{figure} 
+
+    \begin{figure}
+        \centering
+        \subfloat[左边子标题]{
+            \label{fig:c} %避免子标题折行，嵌套minipage
+            \begin{minipage}[t]{200pt}
+                \centering
+                \includegraphics{2.jpg}    
+            \end{minipage}
+        }
+    \hspace{10pt}%
+        \subfloat[右边子标题]{
+            \label{fig:d}
+            \begin{minipage}[t]{200pt}
+                \centering
+                \includegraphics{3.jpg}    
+            \end{minipage}
+        }
+    \caption{共享的标题}
+    \label{fig：subfig2} %标签在引用或交叉引用的时候使用
+    \end{figure}   
+
+\subsection{矢量绘图}
+   色彩模型分类：1.用于照相，摄影，电视，电脑的三原色模型；2.用于彩色印刷的CMYK四色模型。前者是加色模型，后者是减色模型。\par
+   24位真彩模型中，三原色(红，绿，蓝)各用8位表示，取值从0到255。HTML常用16进制表示。RGB模型用的为笛卡尔坐标，色彩变化不够连续。若将其坐标系改为圆柱坐标系，就是HSL和HSV模型。\par
+   CMYK(蓝，青，洋红，黄)模型默认纸张原本为白色或浅色背景，在上面印刷某种颜料就会减少颜色光的反射，看上去是它的补色。印青色就会得到红色，印洋红得到绿，印黄得到蓝，青、洋红、黄三种颜色都印上就会得到黑色。彩色印刷有分色和套色过程，如果图形上有黑色直接拿黑颜料印刷会减少成本。 CMYK 中的字母K就代表key black。 \par
+   \textbf{预定义和自定义颜色} \par
+   xcolor宏包预定义颜色：19种基本颜色，68种dvips颜色，151种svg颜色，317种Unix/X11颜色。后3类颜色使用时需要加相应的预定义颜色集合选项：\par
+   \begin{lstlisting}
+       \usepackage[dvipsnames]{xcolor}
+       \usepackage[svgnames]{xcolor}
+       \usepackage[x11names]{xcolor}
+   \end{lstlisting} \par
+   也可以使用\textbackslash definecolor命令来自定义更多的颜色： \par
+   \begin{lstlisting}
+    语法：\definecolor{名称}{模式}{参数} 
+    \definecolor{d_red}{RGB}{255,0,0} 
+    \definecolor{d_green}{HTML}{00FF00} 
+   \end{lstlisting} \par
+   \textbf{彩色文字} \par
+   设置文字颜色可以使用\textbackslash textcolor命令。 \par
+   语法： \textbackslash textcolor{名称}|[模式]{代码}{文字} \par
+   \textcolor[RGB]{1,1,200}{颜色} \quad \textcolor{red}{红} \quad \textcolor{pink}{粉红} \quad \textcolor{gray}{灰色字体} \par
+   \textbf{彩色盒子} \par
+   \textbackslash colorbox命令可以生成有彩色背景的盒子，与\textbackslash textcolor类似。\textbackslash fcolorbox命令又给彩色盒子加上边框。 \par
+   \begin{lstlisting}
+       \colorbox{SkyBlue}{}
+       \fcolorbox{Silver}{SkyBlue}{}
+       \fcolorbox{RoyalBlue}{Lavender}{}
+   \end{lstlisting}
+   \colorbox{SkyBlue}{}
+   \fcolorbox{Silver}{SkyBlue}{}
+   \fcolorbox{RoyalBlue}{Lavender}{}
+   \begin{figure}[htbp]
+        \begin{minipage}{500pt}
+            \centering
+            \includegraphics{6.jpg}
+        \end{minipage}
+       \caption{颜色表}
+   \end{figure}
+
+\subsubsection{绘图工具概述}
+   与\LaTeX{}配套使用的矢量绘图工具主要有3种：META-POST,PSTricks,PGF。概述如下： \par
+   \begin{itemize}
+       \item 工作方式：METAPOST离线绘图，生成的MPS(一种特殊的EPS);PSTricks和PGF都采用在线绘图的方式，即在\LaTeX{}文档内直接使用绘图命令。 
+       \item 兼容性：METAPOST生成的MPS需要先转换为PDF才能被pdflatex使用；PSTricks生成的EPS和pdflatex不兼容;PGF提供针对各种驱动的接口，兼容性最好。
+       \item 功能：PSTricks有PostScript作后盾，功能最强；METAPOST擅长处理数学内容；PGF擅长流程图。
+   \end{itemize} \par
+   也可以考虑一些面向\LaTeX{}的绘图前端，如Dia和Ipe，或一些更通用的软件，比如gnuplot和Inkscape。
+
+\section{Metapost}
+   METAFONT只支持黑白，是用来设计字体的。 METAPOST输出的是EPS，而且支持彩色，同时可以在图形上加文字标注，甚至插入TEX源码。 \par
+   \subsection{准备工作}
+    METAPOST的缺省长度单位是bp，也可以使用其他单位。
+    \begin{lstlisting}
+        u := 10pt %变量赋值符号为:=
+        beginfig(1); %图形起始
+        ...     %绘图命令
+        endfig;
+        beginfig(2);
+        ...
+        endfig;
+        end
+    \end{lstlisting}\par
+    变量赋值符号为:=，且一个变量在同一源文件中只需定义一次。一个METAPOST源文件(.mp)。代码中每行语句以分号结尾，注释以百分号起始，回头命令包含在一对起始和结尾声明之间，文件结尾也有一个即为声明。 \par
+    我们可以用命令行程序mpost编译源文件，生成MPS(特殊的EPS)，然后将MPS插入\LaTeX{}中使用。\par
+    METAPOST提供一个变量来设置输出文件名，将下面的代码加到源文件的头部，编译输出的文件名就会是“fig-01.mps,fig-02.mps” \par
+    \begin{lstlisting}
+        outputtemplate "%j-%2c.mps";  %加在源文件的头部
+        outputtemplate "flowchart.mps" %加在每个图形前面
+    \end{lstlisting}
+    xelatex不能识别MPS格式，故需要使用.eps后缀，或使用以下命令： \par
+    \begin{lstlisting}
+        \DeclareGraphicsRule{.mps}{eps}{.mps}{}
+    \end{lstlisting}
+    \begin{figure}
+        \centering
+        \includegraphics{8.jpg}
+    \end{figure}
+
+\subsection{基本图形对象}
+\subsubsection{点和线} METAPOST的缺省直径为0.5bp，可以用withpen选项为\textbf{单个绘图命令}设置画笔，也可以用pickup命令为\textbf{之后所有的绘图命令}设置画笔。用draw命令将几个点以直线连接起来，drawdot命令在指定坐标画点。\par
+    filenametemplate "line.eps";
+    u := 10pt ;%变量赋值符号为:=
+    beginfig(1);
+    draw (0,0)--(4u,0)--(2u,2u)--(0,0) withpen pencircle scaled .8pt;
+    pickup pencircle scaled .8pt;
+    draw (5u,0)--(9u,0)--(7u,2u)--cycle;
+    pickup pencircle scaled 3pt;
+    drawdot (10u,0);
+    drawdot (14u,0);
+    drawdot (12u,12u);
+    endfig;
+    \par
+    几段直线或曲线可以构成一条路径(path),在路径的末尾加个cycle命令构成封闭路径(closed path)。 \par
+    
+\subsubsection{预定义形状}
+    fullcircle命令是以原点为圆心画的一个单位圆，类似的还有halfcircle,quartercircle,unitsquare等。注意单位正方形的参考点在其左下，使用不同方向的的缩放系数xscaled和yscaled。 \par
+\subsubsection{曲线}
+    把画直线时坐标点之间--换成..，就得到一条曲线。METAPOST的曲线用三次贝塞尔算法实现，在曲线上使用方向(direction),张力(tension)和曲率(curl)等控制。\par
+    \begin{lstlisting}
+        filenametemplate "predefined.eps";
+        beginfig(3);
+        pickup pencircle scaled .8pt;
+        draw fullcircle scaled 2u;
+        draw halfcircle scaled 2u;
+        draw quartercircle scaled 2u shifted (3u,0);
+        draw fullcircle xscaled 4u yscaled 2u shifted (9u,0);
+        draw unitsquare scaled 2u shifted (12u,-u);
+        endfig;
+    \end{lstlisting}
+\subsection{图形控制}
+    \subsubsection{线型，箭头 ，彩色和填充}
+    注意：METAPOST不能使用xcolor宏包，只支持rgb和cmyk色彩模式，其自定义颜色的方法如下： \par
+    \begin{lstlisting}
+        color c[];
+        c1 := .9red + .6green + .3blue;
+        c2 := (.9,.6,.3);
+    \end{lstlisting} \par
+    绘图命令一般通过withcolor选项来使用各种颜色。除了为每个绘图命令单独指定颜色，也可以使用全局命令\textbackslash drawoption,使得其后的绘图命令都使用某种颜色。 \par
+\subsection{图形变换}
+    对路径进行平移(shifted)[参数：移到的坐标点]，旋转(rotated)[参数：角度，旋转中心为原点]，定点旋转(rotatedaround)[参数：旋转中心]，镜像(reflectedabout)[参数：两点确定的一条直线]，倾斜(slanted)[倾斜比]等变换操作。 \par
+
+\subsection{标注}
+    label在指定位置加文字标注。命令的8个后缀，top,bottom,lft,rt;ulft左上，urt右上，llft左下，lrt右下。dotlabel命令加标注的同时画了个点。\par
+    \begin{figure}[htbp]
+        \centering
+        \includegraphics{9.jpg}
+    \end{figure}
+    \begin{lstlisting}
+        label.rt("文字",(4u,4u))
+    \end{lstlisting}
+
+\subsection{编程}
+\subsubsection{数据类型和变量}
+    如前面所用的缩放系数u是numeric，点的坐标是pair。除缺省的numeric外，其他变量在使用时需要用数据类型来显示声明。相同类型的变量可以在一行语句中声明，但带下标的变量不能放在同一行。 \par
+
+\section{PSTricks}
+    PSTricks是基于PostScript的宏包，可以直接在\LaTeX{}文档中插入绘图命令。以下为可以和PSTricks配合使用的辅助宏包：\par
+    \begin{figure}[htbp]
+        \centering
+        \includegraphics{10.jpg}
+    \end{figure}
+\subsection{Begin}
+    缺省单位是cm，绘图命令一般放在pspicture 环境中，参数为矩形的左下角和右上角，从左下角的原点开始可以省略该点坐标。 \par
+    \begin{lstlisting}
+        \passet{unit=10pt}
+        \begin{pspicture}(0,0)(4,2)
+            ...
+        \end{pspicture}        
+    \end{lstlisting} \par
+    pst-pdf宏包生成包含PSTricks图形的EPS，然后根据需要转换为PDF。每个pspicture环境中的内容会自成一页，方便插入文档。 \par
+\subsection{基本图像对象}
+     \subsubsection{点和直线}
+    \begin{lstlisting}
+    \begin{pspicture}(-.2,-.2)(14,2.2)
+       \psdot(0,0) %\dot命令画一个点
+       \psdots(4,0)(2,2) %\dots命令画多个点
+       \psline(5,0)(7,2)(9,0) 
+       \psline命令把多个点用直线段连接起来，线段间缺省为尖角。
+       \psline[linearc = .3](10,0)(12,2)(14,0)
+    \end{pspicture}
+    % \end{lstlisting}
+
+    \begin{pspicture}(-.2,-.2)(14,2.2)
+       \psdot(0,0) 
+       \psdots(4,0)(2,2)
+       \psline(5,0)(7,2)(9,0)
+       \psline[linearc = .3](10,0)(12,2)(14,0)
+    \end{pspicture}
+    \psline[linewidth=2pt,linearc=.25]{->}(4,2)(0,1)(2,0)
+    \pscircle[fillcolor=yellow]{1.5}
+    
+    矩形命令psframe，参数就是矩形左下角和右上角的坐标。多边形用pspolygon命令，语法和psline相似，但其会形成封闭路径。矩形和多边形可以设置圆角。\par
+    \begin{lstlisting}
+        \begin{pspicture}(19,3)
+            \psframe(0,0)(4,3)
+            \psframe[framearc=.3](5,0)(9,3)
+            \pspolygon(10,0)(14,0)(12,3)
+            \pspolygon[linearc=.3](15,0)(19,0)(17,3)
+        \end{pspicture}
+    \end{lstlisting}
+\subsubsection{圆，椭圆，圆弧，扇形}
+圆形用 \textbackslash pecircle，参数是圆心和半径。椭圆psellipse，参数：中心，长径，短径。\par
+
+\subsubsection{曲线}
+pscurve曲线命令，平滑曲线连接。psecurve命令显示曲线的两个端点；psccurve命令则把曲线封闭起来，showpoints参数用来指示是否显示曲线的构成点。贝塞尔曲线用psbezier命令，参数是曲线的控制点。抛物线用psparabola命令，参数：抛物线通过某点，抛物线的顶点。\par
+
+\subsubsection{网格和坐标轴}
+制图用到坐标和网络。psgrid命令输出矩形网格，三个参数点。坐标标注在通过第一点的两条直线上，第二和第三点是矩形的两个对角顶点。当第一个参数省略时，坐标标注在通过第一个顶点的两条矩形边上。坐标轴用pst-plot宏包的 \textbackslash psaxes命令。\par
+
+\section{PGF}
+\subsection{准备工作}
+一般不直接使用PGF底层命令，而是通过TikZ来调用。在引用tikz宏包之前，需设置PGF系统驱动。比如dvipdfmx的设置方法如下，使用pdflatex和xelatex时，知道驱动是谁。 \par
+\begin{lstlisting}
+    \def\pgfsysdriver{pgfsys-dvipdfmx.def}
+    \usepackage{tikz}
+\end{lstlisting} \par
+PGF的缺省长度单位是1cm，TikZ提供 \textbackslash tikz命令和tikzpicture环境，具体的绘图指令可以放在 \textbackslash tikz后面，也可以放在tikzpicture环境，两者效果相同。\par
+\begin{lstlisting}
+    \tikz....%绘图命令
+    \begin{tikzpicture}
+        .... %绘图命令
+    \end{tikzpicture}
+\end{lstlisting} \par
+为节省编译时间，可以用preview宏包生成独立图形文件，虽然这样做不是必须的。 \par
+\begin{lstlisting}
+    \documentclass{article}
+    \usepackage[active,tightpage,xetex]{preview}
+    \usepackage{tikz}
+
+    \begin{document}
+        \begin{preview}
+            \begin{tikzpicture}
+                ...
+            \end{tikzpicture}
+        \end{preview}
+    \end{document}
+\end{lstlisting}
+\subsection{基本图形对象}
+\subsubsection{直线和矩形}
+PGF绘图命令语法和METAPOST类似，\textbackslash draw称为一个命令，它后面的--(用来画直线),cycle(用来封闭路径),rectangle等操作，[rounded corners]称为一个选项，用来加圆角。\par
+\begin{lstlisting}
+    \draw (0,0)--(4,0)--(2,2)--(0,0) %起始点是(0,0);
+    \draw (5,0)--(9,0)--(7,2)--cycle %起始点(7,2);
+    \draw [rounded corners] (10,0)--(14,0)--(12,2)--cycle;
+    \draw (15,0) rectangle (19,2);
+    %起始点(15,0)，另一对角顶点(19,2);
+    \draw [rounded corners] (20,0) rectangle (24,2);
+\end{lstlisting}
+% \begin{preview}    
+% \begin{tikzpicture}
+%     \draw (0,0)--(4,0)--(2,2)--(0,0); %起始点是(0,0)
+%     \draw (5,0)--(9,0)--(7,2)--cycle; %起始点(7,2)
+%     \draw [rounded corners] (10,0)--(14,0)--(12,2)--cycle;
+%     \draw (15,0) rectangle (19,2);
+%     %起始点(15,0)，另一对角顶点(19,2)
+%     \draw [rounded corners] (20,0) rectangle (24,2);
+% \end{tikzpicture}
+% \end{preview}
+
+\subsubsection{圆，椭圆，弧形}
+
+\subsubsection{曲线}
+
+\subsubsection{网格}
+
+\subsection{图形控制}
+
+\subsubsection{箭头}
+
+\subsubsection{线宽和线性}
+
+\subsubsection{颜色和填充}
+
+\subsubsection{渐变和阴影}
+
+\subsubsection{样式}
+
+\subsection{图形变换}
+
+
+\subsection{示意图}
+
+\subsubsection{节点}
+PGF中的节点(node)可以是简单的标签，也可以各形状的边框，还可以有各种复杂的属性。
+\tikzset{
+    box/.style = {rectangle,rounded corners=5pt,minimum width =50pt,minimum height=20pt,inner sep=5pt,draw=Silver,fill=Lavender}
+}
+
+\subsubsection{流程图}
+% \node[box] (tex) at(0,0) {.tex};
+
+\subsubsection{树}
+
+
+\section{表格}
+\subsection{简单表格}
+tabular环境提供最简单的表格功能，\textbackslash hline命令表示横线，|表示竖线；\& 表示分列。tabular环境语法：[纵向对齐] \{ 横向对齐和分隔符 \} \par
+\begin{tabular}{|l|c|r|}
+    \hline
+    操作系统    &   发行版  &   编辑器 \\
+    \hline
+    Windows    &    MikTeX  &   TexMakerX \\
+    \hline
+    Unix/Linux  &   teTeX   &   Kile \\
+    \hline
+\end{tabular} \par
+表格也有类似图像的浮动环境table，可把表格简化为三线表。三个横线一样粗细，也可以使用booktabs宏包，分别用 \textbackslash toprule,midrule,bottomrule等命令表示。 \par
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{ccc}
+        \toprule
+        操作系统    &   发行版  &   编辑器 \\
+        \midrule
+        Windows    &    MikTeX  &   TexMakerX \\
+        Unix/Linux  &   teTeX   &   Kile \\
+        \bottomrule    
+    \end{tabular}
+\end{table}
+
+\subsection{表格宽度控制}
+需要具体某列的宽度，将其参数从l,c,r改为p{宽度}，此时纵向对齐方式为居顶。使用宽度控制参数之后，表格内容缺省居左对齐。可使用列前置命令的语法：> \{ 命令 \} 列参数。列前置命令仅对紧邻其后的一列有效。\par 
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{p{80pt}p{80pt}p{80pt}}
+        \toprule
+        操作系统    &   发行版  &   编辑器 \\
+        \midrule
+        Windows    &    MikTeX  &   TexMakerX \\
+        Unix/Linux  &   teTeX   &   Kile \\
+        \bottomrule    
+    \end{tabular}
+\end{table}
+控制整个表格的宽度，可以使用tabularx宏包的同名环境，其中X参数表示可以折行(自动换行)。语法：\{ 表格宽度 \} \{ 横向对齐，分隔符，拆行 \} ，如果想把纵向对齐方式改为居中和居底，可以使用array宏包，提供两个对齐参数：m{宽度}，b{宽度}。\par
+\begin{lstlisting}
+    \begin{table}
+        \centering
+        \begin{tabularx}{350pt}{lXlX} 
+            %350pt总宽度，四列对齐方式，
+            \toprule
+            \midrule
+            \bottomrule
+        \end{tabularx}
+    \end{table}
+\end{lstlisting}
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{p{2cm}p{2cm}p{2cm}p{2cm}}%表示某列可以折行
+    \toprule
+    设置列宽为p2cm超过宽度会自动换行  &   可以折行的第二列，无边落木萧萧下，无尽长江滚滚来   &    不可折行的第三列    &   可折行的第四列，欲把西湖比西子，人面桃花相映红 \\
+    kk & lk & opo &  oo \\
+    ff & hh & jjj &  ghh \\
+    \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection{跨行跨列}
+表格单元需要横跨多列，使用 \textbackslash multicolumn命令。同时使用booktabs宏包的 \textbackslash cmidrule 命令横跨几列横线。\par
+语法：\textbackslash multicolumn \{ 横跨列数 \} \{ 对齐方式 \} \{ 内容 \} \par
+语法：\textbackslash cmidrule \{起始列-结束列\} \par
+语法： \textbackslash multirow \{竖跨行数\} \{跨度\} \{内容\} 
+跨行的表格可以使用multirow宏包的 \textbackslash multirow命令。
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{lll}
+       \toprule
+       & \multicolumn{2}{c}{常用工具} \\
+      \cmidrule{2-3} %横线
+      操作系统 & 发行版 & 编辑器 \\
+      \midrule
+      Windows   &   MikTex & TexMakerX \\
+      Unix  &   teTex   &   Kile \\
+      \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection{数字表格}
+表格包含大量数字时，手工调整小数点和位数对齐很麻烦，可使用warpcol宏包，为tabular环境提供了列对齐参数P,语法：P \{-m.n\}，其中m和n分别是小数点前后的位数，数字前的负号可选。使用multicolumn可以保护表头，防止被P参数误伤。 \par  
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{P{2.5}P{-2.5}}
+        \toprule[1pt]
+        \multicolumn{1}{c}{数学常数} &
+        \multicolumn{1}{c}{物理常数} \\
+        \midrule
+        3.14159 & 2.99792 \\
+        27.18281 & -17.58819 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection{长表格}
+表格太长跨页时，可以用longtable宏包。具体工作如下：\par
+\begin{compactenum}
+    \item 用longtable环境取代tabular环境；
+    \item 在表格开始部分定义每页首页出现的通用表头，表头最后一行末尾不用 \textbackslash \textbackslash 换行，而是加一个 \textbackslash endhead命令；
+    \item 定义首页表头(和通用表头不同时)，最后一行的结尾为 \textbackslash endfirsthead命令结尾。
+    \item 以 \textbackslash endfoot命令结尾的通用表尾；
+    \item 以 \textbackslash endlastfoot命令结尾的末页结尾(如果和通用表尾不同的话)；
+    \item 表格的具体内容；
+\end{compactenum}
+
+\begin{longtable}{ll}
+    %定义每页的表头内容，两行内容
+    \multicolumn{1}{r}{上一页} \\
+    \toprule
+    作者 & 作品 \\
+    \midrule
+    \endhead
+
+\caption{长表格演示} \\
+
+%定义首页的表头
+    \toprule
+    作者 & 作品 \\
+    \midrule
+    \endfirsthead
+
+    \bottomrule
+    \multicolumn{2}{r}{下一页 \dots} \\
+    \endfoot
+    %通用表的结尾
+
+    \bottomrule
+    \endlastfoot
+    %最后的一页如果不同时
+    白居易 & 浔阳江头夜送客，枫叶荻花秋瑟瑟。 \\
+     & 主人下马客在船，举酒欲饮无管弦。 \\
+          & 醉不成欢惨将别，别时茫茫江浸月。 \\
+           & 主人下马客在船，举酒欲饮无管弦。 \\
+          & 醉不成欢惨将别，别时茫茫江浸月。 \\
+           & 主人下马客在船，举酒欲饮无管弦。 \\
+          & 醉不成欢惨将别，别时茫茫江浸月。 \\
+           & 主人下马客在船，举酒欲饮无管弦。 \\
+          & 醉不成欢惨将别，别时茫茫江浸月。 \\
+           & 主人下马客在船，举酒欲饮无管弦。 \\
+          & 醉不成欢惨将别，别时茫茫江浸月。 \\
+           & 主人下马客在船，举酒欲饮无管弦。 \\
+          & 醉不成欢惨将别，别时茫茫江浸月。 \\
+           & 主人下马客在船，举酒欲饮无管弦。 \\
+          & 醉不成欢惨将别，别时茫茫江浸月。 \\
+           & 主人下马客在船，举酒欲饮无管弦。 \\
+          & 醉不成欢惨将别，别时茫茫江浸月。 \\
+           & 主人下马客在船，举酒欲饮无管弦。 \\
+          & 醉不成欢惨将别，别时茫茫江浸月。 \\
+           & 主人下马客在船，举酒欲饮无管弦。 \\
+          & 醉不成欢惨将别，别时茫茫江浸月。 \\
+           & 主人下马客在船，举酒欲饮无管弦。 \\
+          & 醉不成欢惨将别，别时茫茫江浸月。 \\
+           & 主人下马客在船，举酒欲饮无管弦。 \\
+          & 醉不成欢惨将别，别时茫茫江浸月。 \\
+           & 主人下马客在船，举酒欲饮无管弦。 \\
+          & 醉不成欢惨将别，别时茫茫江浸月。 \\
+           & 主人下马客在船，举酒欲饮无管弦。 \\
+          & 醉不成欢惨将别，别时茫茫江浸月。 \\
+           & 主人下马客在船，举酒欲饮无管弦。 \\
+          & 醉不成欢惨将别，别时茫茫江浸月。 \\
+           & 主人下马客在船，举酒欲饮无管弦。 \\
+          & 醉不成欢惨将别，别时茫茫江浸月。 \\
+           & 主人下马客在船，举酒欲饮无管弦。 \\
+          & 醉不成欢惨将别，别时茫茫江浸月。 \\
+           & 主人下马客在船，举酒欲饮无管弦。 \\
+          & 醉不成欢惨将别，别时茫茫江浸月。 \\
+           & 主人下马客在船，举酒欲饮无管弦。 \\
+          & 醉不成欢惨将别，别时茫茫江浸月。 \\
+\end{longtable} \par
+
+\subsection{宽表格}
+表格太宽时用rotating宏包，用sidewaystable环境替代table环境即可。\par
+\begin{sidewaystable}[htbp]
+    \caption{主流英文词典}
+    \label{tab:dict}
+    \centering
+    \begin{tabularx}{550pt}{Xllcrrr} %总宽550pt，7行,注意是tabularx,X!!!
+        \toprule
+        Title   &   Abbr    &   Publisher   &   Year    &   Pages   &   Entries &   Price \\
+        \midrule
+        Oxford English Dict, 2nd Ed & OED & OxfordUniv & 1989 & 21728 & 616500 & 995 \\
+        \midrule
+        Shorter Oxford English Dict,7th Ed & SOED & OxfordUniv &2007 & 3888 & 600000 & 175 \\
+        \bottomrule
+    \end{tabularx}
+\end{sidewaystable}
+
+\subsection{彩色表格}
+用colortbl宏包，提供 \textbackslash columncolor,rowcolor,cellcolor分别设置列，行，单元格的颜色。columncolor需要放到前置命令里，rowcolor,cellcolor分别放到行，单元格之前。colortbl宏包可以使用xcolor宏包的色彩模型；两者同时，则前者不能直接加载，需要通过后者的选项table来加载。三个命令同时使用，顺序为：单元格，行，列。 \par
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{l>{\columncolor{Yellow}}ll}
+        \rowcolor{Red}
+        操作系统    &   发行版  &   编辑器 \\
+        Windows     &   MikTex &    TexMakerX \\
+        \rowcolor{Green}
+        Linux       &   \cellcolor{Lavender}teTex   &   Kile \\
+        \rowcolor{Blue}
+        通用        &   TeX Live    &   TeXworks \\
+    \end{tabular}
+\end{table}
+xcolor宏包的rowcolors命令可以设置奇偶行的颜色，语法：\{起始行\} \{奇数行颜色\} \{偶数行颜色\}。hiderowcolors命令用来暂停显示前面设置的奇偶行颜色，否则后续其他表格会继续显示颜色，另一个命令showrowcolors可以重新激活奇偶行颜色设置。 \par
+
+% \begin{table}[htbp]
+%     \centering
+%     \rowcolors{1}{White}{Blue}
+%     \begin{tabular}
+%         \hline
+%         操作系统    &   发行版  &   编辑器 \\
+%         Windows     &   MikTex &    TexMakerX \\
+%         Linux       &   teTex  &    Kile \\
+%         Mac OS      &   MacTeX &    TeXShop \\
+%         通用        &   Tex Live &  TeXworks \\
+%         \hline
+%         \hiderowcolors %用来暂时停止显示前面设置的奇偶行颜色，否则后面其他表格会继续显示颜色。
+%     \end{tabular}
+% \end{table}
+
+
+\section{文档的结构}
+正文的层次结构，前目录，后索引。长文档通常分为多个文件，与HTML文件类似，PDF也提供超链接功能，通常版权页为偶数页，目录首页为奇数页等。可以在主控文档中引用子文档，\textbackslash include命令会新起一页，不想用新页可以改用 \textbackslash input命令。 \par
+\begin{lstlisting}
+    %master.tex
+    \begin{document}
+        \include{chapter1.tex}
+        \include{chapter2.tex}
+    \end{document}
+\end{lstlisting} \par
+拆分长文档，当文档很长时，编译一遍需要很长的时间 ，可以使用syntonly宏包，这样编译时只检查语法，而不是生成结果文件。
+\begin{lstlisting}
+    \usepackage{syntonly}
+    ...
+    \syntaxonly
+\end{lstlisting}
+
+\subsection{标题}
+标准文档没有为作者所属单位定义的专门命令。只有title,author,date命令。设置完上述内容后，notitlepage和titlepage用来控制标题是否单独占一页。report和book文档类的标题缺省独占一页，article文档类的标题缺省和正文共占一页。
+
+\subsection{目录}
+\textbackslash tableofcontents命令用来生成整个文档的章节目录，可以用 \textbackslash setcounter命令来指定目录的层次深度。不想显示某个章节目录的，可以用*来声明章节。同理，用 \textbackslash listoffigures和 \textbackslash listoftables 命令来生成图目录和表目录。注意，当结构层次变化时，需要编译两次获得新的目录。 \par
+第一次编译生成一些中间文件，后缀分别为.toc(目录)，.lof(图目录)，.lot(表目录)；第二次编译则把中间文件和其他内容整合起来。利用宏包caption自定义类似于插图和表格的浮动环境。\par
+\textbf{自定义浮动环境}->语法：\textbackslash DeclareCaptionType[选项][环境][名称][目录名]
+\begin{lstlisting}
+    \DelcareCaptionType[fileext=loe]{example}[例][例目录]
+    %指定的loe为例目录中间文件后缀，example为环境名
+    %例为浮动环境的标题前缀，例目录为目录的标题
+    \begin{example}[h]
+        ...
+    \end{example}
+\end{lstlisting}
+
+\subsection{参考文献}
+\subsubsection{thebibliography}
+\LaTeX{}最原始的方法是用thebibliography环境和 \textbackslash  bibtem命令来定义参考文献条目。thebibliography环境一般放在文档的末尾，定义好参考文献后，可以用 \textbackslash cite命令在正文中引用条目。
+\begin{lstlisting}
+    \begin{thebibliography}
+    \bibitem{Rowling_1997}{9}
+    %参数9表示参考文献条目编号的宽度
+    Jock K. Rowling,
+    \emph{Harry Potter}.
+    Bloomsbury,London,
+    1997.
+\end{thebibliography}
+\end{lstlisting}
+
+% \begin{thebibliography}
+%     \bibitem{Rowling_1997}{9}
+%     %参数9表示参考文献条目编号的宽度
+%     Jock K. Rowling,
+%     \emph{Harry Potter}.
+%     Bloomsbury,London,
+%     1997.
+% \end{thebibliography}
+
+
+\begin{lstlisting}
+    %引用定义好的文献
+    \cite{Rowling_1997}
+\end{lstlisting}
+
+\subsubsection{BibTeX}
+thebibliography需要用户自己调整显示格式。另一条路：用数据库文件.bib记录参考文献目录，用样式文件.bst设置显示格式。一般只需维护数据库即可。\textbf{秉承\LaTeX{}内容和格式分离的思想}，同理在SGML/DSSSL，HTML/CSS，XML/XSL等技术思路相同。\par
+\BibTeX{}将参考文献分为十几种类型，每种类型的参考文献有必选项和可选选项。具体如下： \par
+\textbf{manual}手册 
+\begin{itemize}
+    \item 必选项：title
+    \item 可选项：author,organization,address,edition,month,year,note
+\end{itemize}
+编辑.bib文件时可以用普通文本编辑器，也可以用专门的文献管理软件提高效率，如JabRef。一些其他的文献管理软件或网络服务可以输出为.bib格式，如Endnote,Zotero等。\par
+\begin{lstlisting}
+    @book{Rowling_1997,
+    author  =   "Joanne K.Rowling",
+    title   =   "Harry Potter and the Sorcerer",
+    publisher = "Bloomsbury,London",
+    year    =   "1997"
+    }
+    %其中每行是一个数据项，第一个数据项是关键字，供引用时用；
+    其他的数据项以 名称 = 值的形式出现，值要写在双引号内；数据项间用逗号隔开。
+\end{lstlisting}
+有了数据后，\LaTeX{}发行版提供4种标准的样式，具体如下：
+\begin{compactenum}
+    \item \textbf{plain}:参考文献列表按作者姓氏排序，序号为阿拉伯数字。
+    \item \textbf{unsrt}:参考文献列表按正文引用顺序排序，序号阿拉伯数字。
+    \item \textbf{aloha}:参考文献列表按照作者姓氏排序，序号为作者姓氏加年份。
+    \item \textbf{abbrv}:类似plain样式，作者名字，月份，期刊等用缩写。
+\end{compactenum}
+选定样式后，需要在文档中用 \textbackslash bibliographystyle命令设置样式，然后用 \textbackslash bibliography命令用来输出参考文献列表。前文中的交叉引用的文档需要编译两遍，含参考文献的文档则需要执行4次编译操作。
+\begin{lstlisting}
+    \bibliographystyle{plain}
+    \bibliography{myref}
+\end{lstlisting}
+\begin{compactenum}
+    \item 第一遍xelatex把参考文献条目的关键字写到中间文件.aux中去。
+    \item bibtex根据.aux,.bib,.bst生成一个.bbl文件，即参考文献列表。它的内容就是thebibliography环境和一些\textbackslash bibtem命令。
+    \item 第二遍xelatex把交叉引用写到.aux中去。
+    \item 第三遍xelatex则在正文中正确地显示引用。
+\end{compactenum}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics{13.jpg}
+\end{figure}
+有多个子文档时，可以在每个子文档中用 \textbackslash bibliography命令设置不同的样式。建议使用统一的样式，用xelatex编译主控文档，用bibtex编译各个子文档。\par
+
+\subsubsection{Natbib}
+参考文献在正文中的引用通常有两种模式：作者-年份和数字。\LaTeX{}提供的 \textbackslash cite命令只支持数字模式，而natbib宏包则支持两种模式。\par
+natbib提供了3种列表样式：plainnat,abbrvnat,unsrtnat，它们的文献参考列表和相应的 \LaTeX{} 标准样式plain,abbrv,unsrt效果相同，只是在引用时可以自由选择作者-年份或数字模式，三种列表样式都有自己的缺省样式，如果定制引用样式，可以使用 \textbackslash setcitestyle命令。 \par
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{ll}
+        \toprule
+       引用模式     &   authoryear,number,super \\
+       括号         &   round,square,open=char,close=char \\
+       引用条目分隔符 &     分号，逗号，citesep=char \\
+       作者年份分隔符 &     aysep=char \\
+       共同作者年份分隔符 & yysep=char \\
+       注解分隔符   &   notesep=texy \\
+        \bottomrule
+    \end{tabular}    
+\end{table}
+
+natbib提供多种引用命令，最基本的是 \textbackslash citet和 \textbackslash citep，一般不使用 \LaTeX{}本身提供的 \textbackslash cite命令，其在作者-年份模式下和 \textbackslash citet效果相同，在数字模式下和 \textbackslash citep相同。
+
+\subsection{索引}
+makeidx宏包提供索引命令，\textbackslash makeindex命令；注意索引关键字在全文中保持唯一性，一般在文章末尾打印索引。
+\begin{lstlisting}
+    \usepackage{makeidx}
+    \makeindex
+    ...
+    \begin{document}
+        \index{索引关键字}
+    \end{document}
+\end{lstlisting}
+
+当编译含索引的文档时，用户需要执行3次编译操作。
+\begin{compactenum}
+    \item 第1遍xelatex把索引条目写到一个.idx文件中去。
+    \item makeindex把.idx排序写到一个.ind文件中去。
+    \item 第2遍xelatex在 \textbackslash printindex命令的地方引用.ind的内容，生成正确的内容。
+\end{compactenum}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics{14.jpg}
+\end{figure}
+
+\subsection{超链接}
+hyperref宏包提供超链接功能，给文档的内部交叉引用和参考文献加上超链接，\textbackslash hyperref命令对已经定义的标签进行简单包装，\textbackslash url和 \textbackslash href也可以定义外部链接。\par
+
+\begin{lstlisting}
+    \label{sec:hyperlink}
+    ..
+    编号形式的链接：\ref{sec:hyperlink} \\
+    文字形式链接：\hyperref\sigma [sec:hyperlink]{链接}
+\end{lstlisting}
+
+\begin{lstlisting}
+    \url{http://www.dralpha.com/} \\
+    \href{https://baidu.com/}{百度} 
+\end{lstlisting}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics{11.jpg}
+    \includegraphics{12.jpg}
+\end{figure}
+
+\subsection{结构名}
+每个文档都有自己的名字，一般用来在标题或引用时显示。比如：主目录(Contents),图目录(List of Figures),表目录(List of Tables);章(chapter),节(section),小节(subsection);图(figure),表(Table)。
+\begin{lstlisting}
+    \renewcommand{\contentsname}{目录}
+    \renewcommand{\listfigurename}{图目录}
+\end{lstlisting}
+
+
+\section{布局}
+在\LaTeX{}排版对象都是一个盒子，盒子间的相互嵌套到更大的盒子中，排版时页面是最大的盒子，纸张规格有两大标准：公制和美制。
+\subsection{历史}
+1786年，德国科学家就发现 $\frac{1}{\sqrt{2}}$这个比例可用于分割纸张，在较长的方向一分为二，得到的两张纸也是同样比例。德国标准化学会(DIN)在1922年发布476纸张标准，从面积1 $m^2$的A0(841mm×1189mm)开始，每次减半长边。1961年ISO将A和B系列采纳为推荐标准，1975年变为ISO216标准，其中的B系列比DIN476略大，从1000mm×1414mm的B0开始，1985年发布的ISO269加上C系列，尺寸是A系列和B系列纸张尺寸的几何平均。\par
+A系列常用于公文；B系列常用于海报和护照(B7,88mm×125mm)；C系列常用于信封，恰好比A系列大一点，如A4纸可以装在C4信封里，对折一下可以装进C5信封，再对折进C6中。\par
+大多数国家采用ISO标准，美国和其他几个国家使用比A4宽一点的Letter(8.5in×11in)，Legal(8.5in×14in)主要用于法律文件，比普通文件长一大截。1996年美国推出ANSI Y14.1定义了A,B,C,D,E规格。A即Letter，B比A的面积大一倍，C比B大一倍，以此类推。它们的长宽比不一致，B和C比其他三种窄的多，它们的尺寸倒是和A4-A0差不多。\par
+
+\subsubsection{尺寸详解}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics{15.jpg}
+\end{figure}
+图为一张A4版，尺寸210mm×297mm(597pt×845pt)，body为正文区域，Header是页眉，Footer为页脚。图片尺寸介绍如下：
+\begin{compactenum}
+    \item 页边距，1in
+    \item \textbackslash oddsidemargin或evensidemargin，奇数或偶数页左边距，46pt
+    \item \textbackslash textwidth,正文宽度360pt,约32汉字
+    \item 597pt减去左边的 1in+46pt和中间的360pt，还剩119pt，左右相差1pt。如果双面打印的话，两面的正文部分恰好是重叠
+    \item 页边距，1in
+    \item \textbackslash topmargin，上边距，18pt
+    \item \textbackslash headheight，页眉高度，12pt
+    \item \textbackslash headsep，页眉与正文间距，25pt
+    \item \textbackslash textheight，正文高度595pt，可以放下38行文字
+    \item \textbackslash footskip，正文与页脚基线间距，30pt。比页眉的12pt+25pt小了7pt
+    \item \textbackslash 845pt减去上面的全部尺寸，还剩93pt，比上面的1in+18pt多3pt。
+\end{compactenum} \par
+当字号发生变化时，上面的某些尺寸也发生一定的变化，当把oneside改为twoside，奇偶页的左边距就变成22pt和70pt。但是奇数页右边空白恰好和偶数页左边空白相等，不会给双面打印造成困扰。一般情况无需改动 \LaTeX{}的页面布局缺省设置，有特殊需要时可用 \textbackslash setlength，\textbackslash addtolength设置宏变量的值。geometry宏包提供更高级的用户接口，如下面设置页面尺寸和边距：\par
+\begin{lstlisting}
+    \usepackage[paperwidth=100mm,paperheight=150mm,margin=20mm]{geometry}
+\end{lstlisting}
+\begin{lstlisting}
+    %也可以单独设置每个边距：
+    \usepackage[top=2in,bottom=1in,left=1in,right=1in]{geometry}
+    %把页面横过来：
+    \usepackage[landscape]{geometry}
+\end{lstlisting}
+
+\subsection{页面样式}
+页面样式也就是页眉和页脚的内容，有4个样式：\par
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{ll}
+        \toprule
+       empty     &   页眉，页脚空白 \\
+       plain     &   页眉空白，页脚含居中页码，非book类文档的缺省值\\
+       heading   &   页脚空白，页眉含章节名和页码，book类文档缺省值\\
+       myheading &   页脚空白，页眉含页码和用户自定义信息\\
+        \bottomrule
+    \end{tabular}    
+\end{table} 
+同时可以用 \textbackslash pagestyle和 \textbackslash thispagestyle命令设置整个文档或某页的样式。\par 
+
+\begin{lstlisting}
+    \pagestyle{plain} %全局设置
+    \thispagestyle{empty} %单页设置
+
+    %自定义样式
+    %使用了@特殊符号，第一行用\makeatletter命令声明
+    %最后一行用相应的\makeatother命令恢复现场
+    \mskeatletter
+    \newcommand{\ps@permanentdamagedhead}{
+        %自定义奇偶页的页眉和页脚
+        \newcommand{\@oddhead}{奇页眉\hfill 右半边}
+        %\hill为弹性填充命令
+        \renewcommand{\@oddfoot}{\hfill\thepage\hfill}
+        \newcommand{\@evenhead}{偶页眉\hfill 奇半边}
+        \newcommand{\@evenfoot}{\@oddfoot}
+    }
+    \makeatother
+\end{lstlisting}
+自定义页面样式时，还可以使用一些宏变量来显示页码，章节号码和名称等，具体如下表所示：
+\begin{table}[htbp]
+    \centering
+    \caption{页眉页脚常用宏变量}
+    \begin{tabular}{lp{10cm}}
+        \toprule
+       \textbackslash thepage     &   页码 \\
+       \textbackslash thechapter  &   章编号\\
+       \textbackslash thesection  &   节编号\\
+       \textbackslash chaptername &   章起始单词名,Chpter\\
+       \textbackslash sectionname &   节起始单词名,Section \\
+       \textbackslash leftmark    &   左标记，article文档类中包含section信息，report和book包含chapter信息 \\
+       \textbackslash rightmark   &    右标记，在article包含subsection信息，在report和book中包含section信息 \\
+        \bottomrule
+    \end{tabular}    
+\end{table} 
+前5个变量可直接定义，左右标记需要用以下命令间接定义：\par
+\begin{lstlisting}
+    \makeboth{左标记}{右标记} %定义2个标记
+    \markboth{右标记} %定义右标记
+    %引用时用\leftmark和\rightmark，定义时用\markboth和\markright
+
+    %book类文档中myheadings样式定义
+    \def\pa@headings{
+        \let\@oddfoot\@empty \let \@evenfoot\@empty
+        %清空页脚
+        \def\@evenhead{\thepage\hfill\slshape\leftmark}
+        %定义偶数页页眉(左页页眉)，页码居左，左标记居右
+        \def\@oddhead{{\slshape\rightmark}\hfill\thepage}
+        %奇数页页眉(右页页眉)，右标记居左，页码居右。
+    }
+\end{lstlisting}\par
+fancyhdr宏包提供更灵活的控制和高级语法，如下所示：\par
+\begin{lstlisting}
+    %怎样为myheadings样式定制左右标记
+    \documentclass{book}
+    \markboth{左}{右}
+    \pagestyle{myheadings}
+    ...
+    \begin{document}
+        左页
+        \newpage
+        右页
+        \newpage
+    \end{document}
+\end{lstlisting}
+
+\subsection{分栏}
+\begin{lstlisting}
+    \documentclass[twocolumn]{article}
+\end{lstlisting}
+\par
+multicol宏包提供多达10个栏位，数目可任意切换，各栏的长度相同。注意在multicols环境中对浮动体的支持有限，只能使用带*的版本。且浮动体跨栏位，h选项也会失效，最12早也只出现在下一页的页首，因此建议不让浮动体出现在栏位内。\par
+\begin{lstlisting}
+    \usepackage{multicol}
+    \setlength{\columnsep}{12pt}
+    %将栏位之间的距离设为12pt(缺省为10pt)
+    \setlength{\columnseprule}{1pt}
+    %将栏位间的分割线宽度设为1pt(缺省不显示)
+    \begin{multicols}{2}
+        ...
+    \end{multicols}
+\end{lstlisting}
+
+\subsection{分页}
+\TeX{}一般自动分页，针对浮动体较多的情况，自动分页效果可能不是我们想要的，可以手工插入分页命令。\par
+\begin{lstlisting}
+    \newpage
+    \pagebreak[3]
+    %参考数值1-4,4表示强烈分页
+    \nopagebreak[2]
+    %强烈程度1-4，4表示强烈反对
+    \clearpage
+    %浮动体较多，此命令要求\TeX{}排完此前所有的浮动体
+\end{lstlisting}
+
+%连接文件显示的编写
+\lstinputlisting[
+    style       =   Python,
+    captionpos  =   {\bf demo.py},
+    label       =   {demo.py}
+]{demo.py}
+%表示代码文件的相对位置
+
+\section{符号}
+\subsection{\TeX 标志符号}
+%基本符号
+\TeX{} ,\LaTeX{}, \LaTeXe{}
+
+%需要导入xltxtra宏包
+\XeLaTeX{}
+
+%texnames宏包提供
+\AmSTeX{},\AmS-\LaTeX{}
+
+\BibTeX{},\LuaTeX{}
+
+%mflogo宏包提供
+\METAFONT{},\MF{},\MP{}
+
+\begin{lstlisting}
+%基本符号标志
+\TeX{} ,\LaTeX{}, \LaTeXe{}
+%需要导入xltxtra宏包
+\XeLaTeX{}
+%texnames宏包提供
+\BibTeX{},\LuaTeX{}
+\AmSTeX{},\AmS-\LaTeX{}
+%mflogo宏包提供
+\METAFONT{},\MF{},\MP{}
+\end{lstlisting}
+%符号说明：
+% \\ 纯换行 ; \par 换行带缩进
+%\subsection子标题
+%输出 \[反斜线] \textbackslash
+%输出 % \%
+\section{简历的制作}
+
+
+
+\end{document}
